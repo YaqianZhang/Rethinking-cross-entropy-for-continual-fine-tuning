@@ -1,0 +1,68 @@
+seed_everything: 42
+accelerator: gpu
+strategy: null
+devices: 1
+num_nodes: 1
+precision: 32
+benchmark: true
+deterministic: true
+checkpoint: null
+data:
+  current_task: 0
+  dataset: cub200
+  root: ../LAE/data
+  num_init_classes: 0
+  num_increment_classes: 20
+  class_order: null
+  memory:
+    algo_name: herding
+    max_size: 0
+    num_samples_per_class: 0
+    norm_feature: false
+  dataloader:
+    batch_size: 256
+    batch_size_val: 0
+    num_workers: 4
+    pin_memory: true
+    drop_last: true
+  eval_on: seen
+  val_split_ratio: 0.0
+  train_val_split_seed: 42
+module:
+  model:
+    backbone: ViT-B_16
+    head_kwargs:
+      weight_initialization_type: "normal"
+      weight_std: 0.001
+  adapt_blocks: [0, 1, 2, 3, 4]
+  PG_alpha: 1
+  neg_reward: 0
+  pos_reward: 1
+  temperature: 1
+  gamma: 0
+  beta: 0
+  loss_type: "pg_ce"
+  pet_cls: Adapter
+  pet_kwargs: {}
+  current_epoch: 0
+  num_epochs: 50
+  num_freeze_epochs: 30
+  optimizer:
+    algo: Adam
+    lr: 0.0005 
+    weight_decay: 0.0
+    kwargs: {}
+  scheduler:
+    mode: linear
+    cycle: 0
+    scale_min: 0.0
+  schedule_unit: none
+  clip_grad_norm: 0.0
+  clip_grad_value: 0.0
+  accumulate_grad: 1
+  eval_every_n_epoch: 100000
+  log_every_n_step: 1
+  summary_depth: 5
+  num_emas: 0
+  ema_decay: 0.9999
+  eval_only_emas: false
